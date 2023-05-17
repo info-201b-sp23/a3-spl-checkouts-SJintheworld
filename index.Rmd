@@ -7,6 +7,8 @@ output: html_document
 
 An introduction of the data and a description of the trends/books/items you are choosing to analyze (and why!)
 
+The COVID-19 pandemic has significantly impacted various aspects of our lives, including how we interact with public spaces like libraries. In recent years, libraries have increasingly embraced digital technologies, allowing patrons to access a wide range of books and resources remotely. The Seattle Public Library is no exception, and its vast collection provides a valuable dataset for understanding the effects of the pandemic on book checkouts.I delve into the dataset of checkouts from the Seattle Public Library, specifically focusing on the period from 2017 to 2023. By examining the checkout trends over these years, we aim to identify relationships and effects that COVID-19 may have had on the library's usage patterns, with a particular emphasis on checkout genres, usage class, and subjects.
+
 ### Summary Information
 
 Write a summary paragraph of findings that includes the 5 values calculated from your summary information R
@@ -21,7 +23,60 @@ These will likely be calculated using your DPLYR skills, answering questions suc
 
 Feel free to calculate and report values that you find relevant.
 
+The analysis of the checkouts dataset from the Seattle public library between 2017 and 2023 revealed interesting insights. Firstly, the publisher with the highest count of checkouts was identified as Random House, Inc., indicating its popularity among library users. Additionally, the book that received the most checkouts was lick, clack, moo : cows that type, suggesting its widespread appeal. When examining the subjects, "Fiction, Literature" emerged as the most popular picks, reflecting the readers' preferences. Furthermore, the comparison of usage classes showed that Digital had the highest number of checkouts, followed by Physical, shedding light on the usage patterns and preferences of library users. Lastly, BOOK stood out as the most borrowed material type, emphasizing its popularity among library patrons during the specified period. These findings provide valuable insights into the trends and preferences of readers at the Seattle public library, highlighting the publishers, books, subjects, usage classes, and material types that garnered the most attention.
+
 ### The Dataset
+# What kind of materialtype has the most 
+data <- read.csv("~/Desktop/2017-2023-10-Checkouts-SPL-Data.csv")
+material_counts <- data %>%
+  group_by(MaterialType) %>%
+  summarise(count = n()) %>%
+  arrange(desc(count))
+
+most_common_material <- material_counts$MaterialType[1]
+cat("The MaterialType with the most occurrences:", most_common_material, "\n")
+
+print(material_counts)
+
+# Compare checkouts of the usageclass
+usage_counts <- data %>%
+  count(UsageClass)
+print(usage_counts)
+
+# What kind of subjects has the most trendy picks
+subject_counts <- data %>%
+  group_by(Subjects) %>%
+  summarise(count = n()) %>%
+  arrange(desc(count))
+
+most_common_subject <- subject_counts$Subjects[1]
+cat("The subject with the most occurrences:", most_common_subject, "\n")
+
+print(subject_counts)
+
+# The most checkout books
+book_counts <- data %>%
+  group_by(Title) %>%
+  summarise(count = n()) %>%
+  arrange(desc(count))
+
+most_checked_out_book <- book_counts$Title[1]
+cat("The book with the most checkouts:", most_checked_out_book, "\n")
+
+print(book_counts)
+
+# The most publisher checkedout
+publisher_counts <- data %>%
+  group_by(Publisher) %>%
+  summarise(count = n()) %>%
+  arrange(desc(count))
+
+most_common_publisher <- publisher_counts$Publisher[1]
+cat("The publisher with the highest count:", most_common_publisher, "\n")
+
+print(publisher_counts)
+
+
 
 - Who collected/published the data?  
 - What are the parameters of the data (dates, number of checkouts, kinds of books, etc.)?
@@ -30,6 +85,11 @@ Feel free to calculate and report values that you find relevant.
 - What, if any, ethical questions do you need to consider when working with this data?  
 - What are possible limitations or problems with this data?   (at least 200 words)
 
+checkout_count <- nrow(data)
+
+This data was collected and published by Seattle Public library itself. It was collected between 2017 to 2023, the number of checkouts is 816354, there are 61825 subjects of books.Firstly, the library management may collect this data for administrative purposes, helping them understand the popularity of different books, materials, and subjects to inform decisions on collection development and resource allocation. Secondly, the data may be collected for usage analysis, enabling insights into borrowing patterns, popular genres, and effectiveness of library services. Researchers or academic institutions may also collect this data to study reading habits, analyze trends, or investigate the impact of library services on communities. Lastly, the data can be utilized to support policy decisions and funding allocations by providing evidence of the library's value and impact. Understanding the specific motivations behind the data collection would require insights from the organization responsible for collecting the data, such as the Seattle public library or the conducting research entity.
+The dataset on checkouts from the Seattle public library between 2017 and 2023 raises certain ethical questions that need consideration. Privacy is a paramount concern, as the dataset may contain personal information that should be protected. Proper anonymization techniques should be employed to safeguard individuals' identities and comply with data protection regulations. Obtaining informed consent from library users for data collection and analysis is crucial, ensuring transparency and respect for their privacy rights. Additionally, understanding data ownership and adhering to usage restrictions set by the Seattle public library are essential ethical considerations.
+As with any dataset, there are potential limitations and problems to be aware of. The dataset's representativeness may be a concern, as it may not encompass the entire population of library users or checkouts. This could impact the generalizability of findings. Data quality issues, such as missing or inaccurate information, could affect the reliability of analyses. Biases may be present, stemming from overrepresentation or underrepresentation of certain genres, subjects, or user demographics. External factors, such as changes in library policies or external events, should be taken into account when interpreting the data. Moreover, contextual information about individual checkouts may be lacking, limiting the depth of analysis and understanding of underlying motivations. Addressing these limitations and problems is crucial to ensure the ethical use and valid interpretation of the data
 
 ### First Trends Over Time Chart
 
@@ -53,6 +113,8 @@ Here's an example of how to run an R script inside an RMarkdown file:
 
 ```{r, echo = FALSE, warning = FALSE, code = readLines("chart1_example.R")}
 ```
+
+
 
 ### Second Trends Over Time Chart
 

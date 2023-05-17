@@ -27,56 +27,20 @@ The analysis of the checkouts dataset from the Seattle public library between 20
 
 ### The Dataset
 # What kind of materialtype has the most 
-data <- read.csv("~/Desktop/2017-2023-10-Checkouts-SPL-Data.csv")
-material_counts <- data %>%
-  group_by(MaterialType) %>%
-  summarise(count = n()) %>%
-  arrange(desc(count))
-
-most_common_material <- material_counts$MaterialType[1]
-cat("The MaterialType with the most occurrences:", most_common_material, "\n")
-
-print(material_counts)
-
+'r material_counts'
 # Compare checkouts of the usageclass
-usage_counts <- data %>%
-  count(UsageClass)
-print(usage_counts)
-
+'r usage_counts'
 # What kind of subjects has the most trendy picks
-subject_counts <- data %>%
-  group_by(Subjects) %>%
-  summarise(count = n()) %>%
-  arrange(desc(count))
-
-most_common_subject <- subject_counts$Subjects[1]
-cat("The subject with the most occurrences:", most_common_subject, "\n")
-
-print(subject_counts)
+'r subject_counts'
 
 # The most checkout books
-book_counts <- data %>%
-  group_by(Title) %>%
-  summarise(count = n()) %>%
-  arrange(desc(count))
-
-most_checked_out_book <- book_counts$Title[1]
-cat("The book with the most checkouts:", most_checked_out_book, "\n")
-
-print(book_counts)
+'r book_counts'
 
 # The most publisher checkedout
-publisher_counts <- data %>%
-  group_by(Publisher) %>%
-  summarise(count = n()) %>%
-  arrange(desc(count))
+'r publisher_counts'
 
-most_common_publisher <- publisher_counts$Publisher[1]
-cat("The publisher with the highest count:", most_common_publisher, "\n")
-
-print(publisher_counts)
-
-
+# Checkout count
+'r checkout_count'
 
 - Who collected/published the data?  
 - What are the parameters of the data (dates, number of checkouts, kinds of books, etc.)?
@@ -85,7 +49,6 @@ print(publisher_counts)
 - What, if any, ethical questions do you need to consider when working with this data?  
 - What are possible limitations or problems with this data?   (at least 200 words)
 
-checkout_count <- nrow(data)
 
 This data was collected and published by Seattle Public library itself. It was collected between 2017 to 2023, the number of checkouts is 816354, there are 61825 subjects of books.Firstly, the library management may collect this data for administrative purposes, helping them understand the popularity of different books, materials, and subjects to inform decisions on collection development and resource allocation. Secondly, the data may be collected for usage analysis, enabling insights into borrowing patterns, popular genres, and effectiveness of library services. Researchers or academic institutions may also collect this data to study reading habits, analyze trends, or investigate the impact of library services on communities. Lastly, the data can be utilized to support policy decisions and funding allocations by providing evidence of the library's value and impact. Understanding the specific motivations behind the data collection would require insights from the organization responsible for collecting the data, such as the Seattle public library or the conducting research entity.
 The dataset on checkouts from the Seattle public library between 2017 and 2023 raises certain ethical questions that need consideration. Privacy is a paramount concern, as the dataset may contain personal information that should be protected. Proper anonymization techniques should be employed to safeguard individuals' identities and comply with data protection regulations. Obtaining informed consent from library users for data collection and analysis is crucial, ensuring transparency and respect for their privacy rights. Additionally, understanding data ownership and adhering to usage restrictions set by the Seattle public library are essential ethical considerations.
@@ -111,10 +74,21 @@ variable name.
 
 Here's an example of how to run an R script inside an RMarkdown file:
 
-```{r, echo = FALSE, warning = FALSE, code = readLines("chart1_example.R")}
+```{r, echo = FALSE, warning = FALSE, code = readLines("Comparison of Digital vs Physical Checkouts.R")}
 ```
 
+library(ggplot2)
 
+usage_counts <- table(data$UsageClass)
+usage_df <- data.frame(
+  UsageClass = names(usage_counts),
+  Count = as.numeric(unlist(usage_counts))
+)
+ggplot(usage_df, aes(x = UsageClass, y = Count)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(title = "Comparison of Digital vs Physical Checkouts",
+       x = "Usage Class", y = "Count")
+# The reason of comparing these two checkouts is to demonstrate that due to COVID-19, more people are engaged of using digital copies compared to the past, since the amount of digital book checkouts has increased up to almost as same as physical books.From the bar graph, we can see that almost the amount of checkouts for both are similar.
 
 ### Second Trends Over Time Chart
 
@@ -136,8 +110,16 @@ variable name.
 
 Here's an example of how to run an R script inside an RMarkdown file:
 
-```{r, echo = FALSE, code = readLines("chart2_example.R")}
+```{r, echo = FALSE, code = readLines("Comparison of Material Types.R")}
 ```
+
+material_counts <- data.frame(table(data$MaterialType))
+ggplot(material_counts, aes(x = Var1, y = Freq)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(title = "Comparison of Material Types",
+       x = "Material Type", y = "Count") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+# This is also to compare through COVID-19 to find out which materials are welcomed for people to read books on. Since books are still the first of materials, we can see that audiobooks, ebooks and videos have increased a lot because people can't go out due to the COVID.
 
 ### Your Choice
 
@@ -150,7 +132,20 @@ more. Here are some requirements to help guide your design:
 
 Here's an example of how to run an R script inside an RMarkdown file:
 
-```{r, echo = FALSE, code = readLines("chart2_example.R")}
+```{r, echo = FALSE, code = readLines("Top 5 Most Checked-out Titles.R")}
 ```
 
+sorted_data <- data[order(-data$Checkouts), ]
+top_10_data <- head(sorted_data, 10)
 
+ggplot(top_10_data, aes(x = reorder(Title, Checkouts), y = Checkouts)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(title = "Top 5 Most Checked-out Titles",
+       x = NULL, y = "Checkouts") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
+        axis.title.x = element_blank()) +
+  coord_flip()
+
+ggsave("graph.png", width = 10, height = 6, units = "in")
+
+# This graph is about my self-interest, as I like to borrow books from library too. I wanted to know what kind of books people would like to borrow from the library and try them if I haven't yet.

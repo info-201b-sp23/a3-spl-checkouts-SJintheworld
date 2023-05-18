@@ -1,6 +1,6 @@
 # Assignment 3: SPL Library Checkouts
 
-Link to your final GitHub pages site here: https://info-201b-sp23.github.io/a3-spl-checkouts-starter/index.html (change the link to for your GitHub pages site)
+Link to your final GitHub pages site here: https://github.com/info-201b-sp23/a3-spl-checkouts-SJintheworld/blob/main/index.html
 
 In this assignment, you will use your data analysis and visualization skills to analyze patterns and trends in [library circulation data published by the Seattle Public Library](https://data.seattle.gov/Community/Checkouts-by-Title/tmmm-ytt6).
 

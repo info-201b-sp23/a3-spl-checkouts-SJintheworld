@@ -5,147 +5,32 @@ output: html_document
 
 ### Introduction
 
-An introduction of the data and a description of the trends/books/items you are choosing to analyze (and why!)
-
 The COVID-19 pandemic has significantly impacted various aspects of our lives, including how we interact with public spaces like libraries. In recent years, libraries have increasingly embraced digital technologies, allowing patrons to access a wide range of books and resources remotely. The Seattle Public Library is no exception, and its vast collection provides a valuable dataset for understanding the effects of the pandemic on book checkouts.I delve into the dataset of checkouts from the Seattle Public Library, specifically focusing on the period from 2017 to 2023. By examining the checkout trends over these years, we aim to identify relationships and effects that COVID-19 may have had on the library's usage patterns, with a particular emphasis on checkout genres, usage class, and subjects.
 
 ### Summary Information
-
-Write a summary paragraph of findings that includes the 5 values calculated from your summary information R
-script
-
-These will likely be calculated using your DPLYR skills, answering questions such as:
-
-- What is the average number of checkouts for each item?
-- What is the month or year with the most/least checkouts for a book that you're interested in?
-- What is the month or year with the most/least checkouts for ebooks?
-- How has the number of print book checkouts changed over time?
-
-Feel free to calculate and report values that you find relevant.
-
 The analysis of the checkouts dataset from the Seattle public library between 2017 and 2023 revealed interesting insights. Firstly, the publisher with the highest count of checkouts was identified as Random House, Inc., indicating its popularity among library users. Additionally, the book that received the most checkouts was lick, clack, moo : cows that type, suggesting its widespread appeal. When examining the subjects, "Fiction, Literature" emerged as the most popular picks, reflecting the readers' preferences. Furthermore, the comparison of usage classes showed that Digital had the highest number of checkouts, followed by Physical, shedding light on the usage patterns and preferences of library users. Lastly, BOOK stood out as the most borrowed material type, emphasizing its popularity among library patrons during the specified period. These findings provide valuable insights into the trends and preferences of readers at the Seattle public library, highlighting the publishers, books, subjects, usage classes, and material types that garnered the most attention.
 
 ### The Dataset
-# What kind of materialtype has the most 
-'r material_counts'
-# Compare checkouts of the usageclass
-'r usage_counts'
-# What kind of subjects has the most trendy picks
-'r subject_counts'
-
-# The most checkout books
-'r book_counts'
-
-# The most publisher checkedout
-'r publisher_counts'
-
-# Checkout count
-'r checkout_count'
-
-- Who collected/published the data?  
-- What are the parameters of the data (dates, number of checkouts, kinds of books, etc.)?
-- How was the data collected or generated?  
-- Why was the data collected?  
-- What, if any, ethical questions do you need to consider when working with this data?  
-- What are possible limitations or problems with this data?   (at least 200 words)
-
-
 This data was collected and published by Seattle Public library itself. It was collected between 2017 to 2023, the number of checkouts is 816354, there are 61825 subjects of books.Firstly, the library management may collect this data for administrative purposes, helping them understand the popularity of different books, materials, and subjects to inform decisions on collection development and resource allocation. Secondly, the data may be collected for usage analysis, enabling insights into borrowing patterns, popular genres, and effectiveness of library services. Researchers or academic institutions may also collect this data to study reading habits, analyze trends, or investigate the impact of library services on communities. Lastly, the data can be utilized to support policy decisions and funding allocations by providing evidence of the library's value and impact. Understanding the specific motivations behind the data collection would require insights from the organization responsible for collecting the data, such as the Seattle public library or the conducting research entity.
 The dataset on checkouts from the Seattle public library between 2017 and 2023 raises certain ethical questions that need consideration. Privacy is a paramount concern, as the dataset may contain personal information that should be protected. Proper anonymization techniques should be employed to safeguard individuals' identities and comply with data protection regulations. Obtaining informed consent from library users for data collection and analysis is crucial, ensuring transparency and respect for their privacy rights. Additionally, understanding data ownership and adhering to usage restrictions set by the Seattle public library are essential ethical considerations.
 As with any dataset, there are potential limitations and problems to be aware of. The dataset's representativeness may be a concern, as it may not encompass the entire population of library users or checkouts. This could impact the generalizability of findings. Data quality issues, such as missing or inaccurate information, could affect the reliability of analyses. Biases may be present, stemming from overrepresentation or underrepresentation of certain genres, subjects, or user demographics. External factors, such as changes in library policies or external events, should be taken into account when interpreting the data. Moreover, contextual information about individual checkouts may be lacking, limiting the depth of analysis and understanding of underlying motivations. Addressing these limitations and problems is crucial to ensure the ethical use and valid interpretation of the data
 
 ### First Trends Over Time Chart
+-The reason of comparing these two checkouts is to demonstrate that due to COVID-19, more people are engaged of using digital copies compared to the past, since the amount of digital book checkouts has increased up to almost as same as physical books.From the bar graph, we can see that almost the amount of checkouts for both are similar.
 
-Include a chart. Make sure to describe why you included the chart, and what patterns emerged
-
-The first chart that you will create and include will show the trend over time of your variable/topic/interest.
-Think carefully about what you want to communicate to your user (you may have to find relevant trends in the 
-dataset first!). Here are some requirements to help guide your design:
-
-- Show more than one, but fewer than ~10 trends
-  - For example, two books, or 5 different mediums
-- You must have clear x and y axis labels
-- The chart needs a clear title 
-- You need a legend for your different line colors and a clear - legend title
-In your .Rmd file, make sure to describe why you included the chart, and what patterns emerged
-
-When we say "clear" or "human readable" titles and labels, that means that you should not just display the 
-variable name.
-
-Here's an example of how to run an R script inside an RMarkdown file:
-
-```{r, echo = FALSE, warning = FALSE, code = readLines("Comparison of Digital vs Physical Checkouts.R")}
+```{r, echo = FALSE, code = readLines("Chart1.R")}
 ```
 
-library(ggplot2)
-
-usage_counts <- table(data$UsageClass)
-usage_df <- data.frame(
-  UsageClass = names(usage_counts),
-  Count = as.numeric(unlist(usage_counts))
-)
-ggplot(usage_df, aes(x = UsageClass, y = Count)) +
-  geom_bar(stat = "identity", fill = "steelblue") +
-  labs(title = "Comparison of Digital vs Physical Checkouts",
-       x = "Usage Class", y = "Count")
-# The reason of comparing these two checkouts is to demonstrate that due to COVID-19, more people are engaged of using digital copies compared to the past, since the amount of digital book checkouts has increased up to almost as same as physical books.From the bar graph, we can see that almost the amount of checkouts for both are similar.
 
 ### Second Trends Over Time Chart
+-This is also to compare through COVID-19 to find out which materials are welcomed for people to read books on. Since books are still the first of materials, we can see that audiobooks, ebooks and videos have increased a lot because people can't go out due to the COVID.
 
-Include a chart. Make sure to describe why you included the chart, and what patterns emerged
-
-The second chart that you will create and include will show another trend over time of your 
-variable/topic/interest. Think carefully about what you want to communicate to your user (you may have to find 
-relevant trends in the dataset first!). Here are some requirements to help guide your design:
-
-- Show more than one, but fewer than ~10 trends
-  - For example, two books, or 5 different mediums
-- You must have clear x and y axis labels
-- The chart needs a clear title 
-- You need a legend for your different line colors and a clear - legend title
-In your .Rmd file, make sure to describe why you included the chart, and what patterns emerged
-
-When we say "clear" or "human readable" titles and labels, that means that you should not just display the 
-variable name.
-
-Here's an example of how to run an R script inside an RMarkdown file:
-
-```{r, echo = FALSE, code = readLines("Comparison of Material Types.R")}
+```{r, echo = FALSE, code = readLines("Chart2.R")}
 ```
 
-material_counts <- data.frame(table(data$MaterialType))
-ggplot(material_counts, aes(x = Var1, y = Freq)) +
-  geom_bar(stat = "identity", fill = "steelblue") +
-  labs(title = "Comparison of Material Types",
-       x = "Material Type", y = "Count") +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
-# This is also to compare through COVID-19 to find out which materials are welcomed for people to read books on. Since books are still the first of materials, we can see that audiobooks, ebooks and videos have increased a lot because people can't go out due to the COVID.
 
 ### Your Choice
+-This graph is about my self-interest, as I like to borrow books from library too. I wanted to know what kind of books otr things people would like to borrow from the library and try them if I haven't yet.TAmong the 5 different book that were mostly liked by people, the first one was headphones which people use it for various purposes, second one was the book "So you want to take about race", I can see it that more people are getting engaged and putting effort learning more about race. Following these two stuffs, third one was the book "The house of broken angels", next was also about race, last one followed as laptops which nowadays most people are tending to use them anywhere.
 
-The last chart is up to you. It could be a line plot, scatter plot, histogram, bar plot, stacked bar plot, and 
-more. Here are some requirements to help guide your design:
-
-- You must have clear x and y axis labels
-- The chart needs a clear title 
-- You need a legend for your different line colors and a clear legend title
-
-Here's an example of how to run an R script inside an RMarkdown file:
-
-```{r, echo = FALSE, code = readLines("Top 5 Most Checked-out Titles.R")}
+```{r, echo = FALSE, code = readLines("Chart3.R")}
 ```
-
-sorted_data <- data[order(-data$Checkouts), ]
-top_10_data <- head(sorted_data, 10)
-
-ggplot(top_10_data, aes(x = reorder(Title, Checkouts), y = Checkouts)) +
-  geom_bar(stat = "identity", fill = "steelblue") +
-  labs(title = "Top 5 Most Checked-out Titles",
-       x = NULL, y = "Checkouts") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
-        axis.title.x = element_blank()) +
-  coord_flip()
-
-ggsave("graph.png", width = 10, height = 6, units = "in")
-
-# This graph is about my self-interest, as I like to borrow books from library too. I wanted to know what kind of books people would like to borrow from the library and try them if I haven't yet.
